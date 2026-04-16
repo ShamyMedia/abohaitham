@@ -1,0 +1,164 @@
+/* == Compact Menu Cards (High Density) == */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.menu-card {
+  background: var(--light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: var(--transition);
+}
+
+.menu-card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+/* Marketing Badge */
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 4px;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Image Wrapper for Lazy Loading */
+.img-wrapper {
+  width: 100%;
+  padding-top: 60%; /* 5:3 Aspect Ratio */
+  position: relative;
+  background-color: #eee; /* Placeholder */
+}
+
+.menu-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Card Content Area */
+.card-content {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  /* Max 2 lines for high density */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: 0.5rem;
+}
+
+.price-value {
+  font-size: 1.2rem;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+/* Variants Select if any */
+.variants-select {
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--font-main);
+  background: var(--light);
+}
+
+/* == Quick Add-ons (Frictionless Cross-sell / Chips) == */
+.quick-addons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border);
+}
+
+.addon-label {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--gray);
+  padding: 0.25rem 0.6rem;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.addon-label input {
+  margin-left: 0.25rem;
+  accent-color: var(--primary);
+}
+
+.addon-price {
+  margin-right: 0.25rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* CTA Button */
+.btn-add {
+  display: block;
+  width: 100%;
+  background-color: #25D366; /* WhatsApp Green for High Contrast */
+  color: var(--light);
+  border: none;
+  padding: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: auto;
+}
+
+.btn-add:hover {
+  background-color: #128C7E;
+}
+.btn-add:active {
+  transform: scale(0.98);
+}
+
+/* CBOS V3: No specialized card sizes or styling. 
+   Every card is uniform. Consistency = Speed of Decision. */
+

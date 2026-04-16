@@ -1,0 +1,251 @@
+{
+  "global_addons": [
+    {"name": "علبة طحينة مخصوصة", "price": 5},
+    {"name": "سلطة بلدي مشطشطة", "price": 5},
+    {"name": "لتر كولا", "price": 20}
+  ],
+  "categories": [
+    {
+      "id": "family-offers",
+      "name": "العروض العائلية",
+      "items": [
+        {
+          "id": "f1",
+          "name": "عرض السعادة",
+          "price": 500,
+          "image": "images/offer-saada.webp",
+          "description": "1/3 كبدة + 1/3 بانيه + 1/8 مخ + بطاطس شيبس + لتر ساقع"
+        },
+        {
+          "id": "f2",
+          "name": "عرض اللمة",
+          "price": 775,
+          "image": "images/offer-lamma.webp",
+          "description": "1/2 كبدة + 1/2 بانيه + 1/4 مخ + بطاطس شيبس + لتر ساقع",
+          "badge": "🔥 الأكثر طلبًا",
+          "highlight": true
+        },
+        {
+          "id": "f3",
+          "name": "عرض الملوك",
+          "price": 1000,
+          "image": "images/offer-molok.webp",
+          "description": "3/4 كبدة + 3/4 بانيه + 1/4 مخ + بطاطس شيبس + لتر ساقع"
+        },
+        {
+          "id": "f4",
+          "name": "عرض أبو هيثم",
+          "price": 1250,
+          "image": "images/offer-abuhaitham.webp",
+          "description": "كيلو كبدة + كيلو بانيه + 1/4 مخ + بطاطس شيبس + لتر ساقع"
+        }
+      ]
+    },
+    {
+      "id": "sandwiches",
+      "name": "السندوتشات",
+      "items": [
+        {
+          "id": "s1",
+          "name": "كبدة بانيه",
+          "price": 20,
+          "image": "images/sand-kebda.webp",
+          "variants": [
+            {"size": "فينو", "price": 20},
+            {"size": "نص بلدي", "price": 25},
+            {"size": "مطبق", "price": 30}
+          ]
+        },
+        {
+          "id": "s2",
+          "name": "مخ بانيه",
+          "price": 50,
+          "image": "images/sand-mokh.webp",
+          "variants": [
+            {"size": "فينو", "price": 50},
+            {"size": "نص بلدي", "price": 55},
+            {"size": "مطبق", "price": 60}
+          ]
+        },
+        {
+          "id": "s3",
+          "name": "فراخ بانيه",
+          "price": 25,
+          "image": "images/sand-chicken.webp",
+          "variants": [
+            {"size": "فينو", "price": 25},
+            {"size": "نص بلدي", "price": 30},
+            {"size": "مطبق", "price": 35}
+          ]
+        },
+        {
+          "id": "s4",
+          "name": "مشكل كبدة ومخ",
+          "price": 40,
+          "image": "images/sand-mix-kebda-mokh.webp",
+          "variants": [
+            {"size": "فينو", "price": 40},
+            {"size": "نص بلدي", "price": 45},
+            {"size": "مطبق", "price": 50}
+          ]
+        },
+        {
+          "id": "s5",
+          "name": "مشكل كبدة وفراخ",
+          "price": 40,
+          "image": "images/sand-mix-kebda-chicken.webp",
+          "variants": [
+            {"size": "فينو", "price": 40},
+            {"size": "نص بلدي", "price": 45},
+            {"size": "مطبق", "price": 50}
+          ]
+        },
+        {
+          "id": "s6",
+          "name": "مشكل 3 أصناف",
+          "price": 50,
+          "image": "images/sand-mix-3.webp",
+          "variants": [
+            {"size": "فينو", "price": 50},
+            {"size": "نص بلدي", "price": 55},
+            {"size": "مطبق", "price": 60}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meals",
+      "name": "الوجبات",
+      "note": "تُقدم ساخنة مع السلطات والخبز الطازج",
+      "items": [
+        {
+          "id": "m1",
+          "name": "كبدة بانيه",
+          "price": 60,
+          "image": "images/meal-kebda.webp",
+          "variants": [
+            {"size": "طلب ثُمن ك", "price": 60},
+            {"size": "مخصوص ربع ك", "price": 85},
+            {"size": "أكيلة نص ك", "price": 110}
+          ]
+        },
+        {
+          "id": "m2",
+          "name": "مخ بانيه",
+          "price": 125,
+          "image": "images/meal-mokh.webp",
+          "variants": [
+            {"size": "طلب ثُمن ك", "price": 125},
+            {"size": "مخصوص ربع ك", "price": 190},
+            {"size": "أكيلة نص ك", "price": 250}
+          ]
+        },
+        {
+          "id": "m3",
+          "name": "فراخ بانيه",
+          "price": 65,
+          "image": "images/meal-chicken.webp",
+          "variants": [
+            {"size": "طلب ثُمن ك", "price": 65},
+            {"size": "مخصوص ربع ك", "price": 85},
+            {"size": "أكيلة نص ك", "price": 110}
+          ]
+        },
+        {
+          "id": "m4",
+          "name": "مشكل كبدة ومخ",
+          "price": 100,
+          "image": "images/meal-mix-kebda-mokh.webp",
+          "variants": [
+            {"size": "طلب ثُمن ك", "price": 100},
+            {"size": "مخصوص ربع ك", "price": 135},
+            {"size": "أكيلة نص ك", "price": 175}
+          ]
+        },
+        {
+          "id": "m5",
+          "name": "مشكل كبدة وفراخ",
+          "price": 90,
+          "image": "images/meal-mix-kebda-chicken.webp",
+          "variants": [
+            {"size": "طلب ثُمن ك", "price": 90},
+            {"size": "مخصوص ربع ك", "price": 110},
+            {"size": "أكيلة نص ك", "price": 130}
+          ]
+        },
+        {
+          "id": "m6",
+          "name": "مشكل 3 أصناف",
+          "price": 140,
+          "image": "images/meal-mix-3.webp",
+          "variants": [
+            {"size": "طلب ثُمن ك", "price": 140},
+            {"size": "مخصوص ربع ك", "price": 185},
+            {"size": "أكيلة نص ك", "price": 200}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "by-kilo",
+      "name": "طلبات بالكيلو (Luxury Section)",
+      "items": [
+        {
+          "id": "k1",
+          "name": "كبدة بانيه",
+          "price": 440,
+          "image": "images/kilo-kebda.webp",
+          "description": "السعر للكيلو كامل"
+        },
+        {
+          "id": "k2",
+          "name": "مخ بانيه",
+          "price": 1000,
+          "image": "images/kilo-mokh.webp",
+          "description": "السعر للكيلو كامل"
+        },
+        {
+          "id": "k3",
+          "name": "فراخ بانيه",
+          "price": 440,
+          "image": "images/kilo-chicken.webp",
+          "description": "السعر للكيلو كامل"
+        },
+        {
+          "id": "k4",
+          "name": "مشكل كبدة ومخ",
+          "price": 580,
+          "image": "images/kilo-mix-kebda-mokh.webp",
+          "description": "السعر للكيلو كامل"
+        },
+        {
+          "id": "k5",
+          "name": "مشكل كبدة وفراخ",
+          "price": 440,
+          "image": "images/kilo-mix-kebda-chicken.webp",
+          "description": "السعر للكيلو كامل"
+        },
+        {
+          "id": "k6",
+          "name": "مشكل 3 أصناف",
+          "price": 580,
+          "image": "images/kilo-mix-3.webp",
+          "description": "السعر للكيلو كامل"
+        }
+      ]
+    },
+    {
+      "id": "salads",
+      "name": "السلطات",
+      "items": [
+        {
+          "id": "sl1",
+          "name": "أنواع السلطات",
+          "price": 8,
+          "image": "images/salad.webp",
+          "description": "جمبع أنواع السلطات متوفرة"
+        }
+      ]
+    }
+  ]
+}

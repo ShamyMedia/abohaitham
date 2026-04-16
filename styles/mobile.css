@@ -1,0 +1,103 @@
+/* == Mobile Specific Overrides (Mobile First Approach) == */
+@media screen and (max-width: 768px) {
+  .menu-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem; /* Tighter gap for high density */
+  }
+  
+  /* Make cards even more compact on mobile */
+  .card-content {
+    padding: 0.5rem;
+  }
+  
+  .card-title {
+    font-size: 0.95rem;
+  }
+  
+  .card-desc {
+    font-size: 0.75rem;
+  }
+  
+  .price-value {
+    font-size: 1rem;
+  }
+  
+  .btn-add {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Increase touch target size for variants select */
+  .variants-select {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+  }
+
+  /* Optimize quick addons spacing for touch */
+  .addon-label {
+    padding: 0.25rem 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  /* For very small screens (iPhone SE, older Androids) */
+  .menu-grid {
+    grid-template-columns: 1fr; /* Fallback to 1 column if too tight */
+  }
+}
+
+/* == Floating Cart == */
+.floating-cart {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.floating-cart.visible {
+  transform: translateY(0);
+}
+
+.cart-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-items-count {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.cart-total {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.btn-checkout {
+  background-color: #25D366; /* WhatsApp Green */
+  color: var(--light);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+.btn-checkout:hover {
+  background-color: #128C7E;
+}
