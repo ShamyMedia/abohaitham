@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f7f7f7;
+}
+
+.header {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+}
+
+section {
+  padding: 16px;
+}
+
+.main-offer {
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
+
+.offers-row {
+  display: flex;
+  gap: 10px;
+}
+
+.offer-card {
+  flex: 1;
+  background: #fff;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.product-card {
+  background: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  background: #e63946;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:active {
+  opacity: 0.7;
+}
+
+.cart-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #111;
+  color: #fff;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+}

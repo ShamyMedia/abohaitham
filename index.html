@@ -1,134 +1,71 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم أبو هيثم - المنيو الإلكتروني</title>
-    
-    <!-- Meta Tags for SEO & Social Media Sharing (Open Graph) -->
-    <meta name="description" content="اطلب الآن أشهى وجبات الكبدة والمخ والدجاج من مطعم أبو هيثم. توصيل سريع ومذاق لا يقاوم!">
-    <meta property="og:title" content="مطعم أبو هيثم - أصل التسوية">
-    <meta property="og:description" content="عروض التوفير والوجبات العائلية - كبدة، بانيه، مخ. افتح المنيو واطلب عبر واتساب في ثوانٍ!">
-    <meta property="og:image" content="assets/hero.jpg">
-    <meta property="og:url" content="https://abu-haitham.example.com">
-    <meta property="og:type" content="website">
-
-    <!-- Preconnect + Preload for Performance (font-display: swap to prevent FOIT) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/layout.css">
-    <link rel="stylesheet" href="styles/menu.css">
-    <link rel="stylesheet" href="styles/mobile.css">
-
-    <!-- Tracking Initialization -->
-    <script>
-        window.dataLayer = window.dataLayer || [];
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مطعم أبو هيثم</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header class="header">
-        <div class="lang-toggle-container">
-            <button id="btn-lang" class="btn-lang" onclick="toggleLanguage()">EN</button>
-        </div>
-        <div class="logo-container">
-            <img src="images/logo.webp" alt="شعار مطعم أبو هيثم" class="logo" loading="eager" onerror="this.outerHTML='<div class=\\\'logo-text-fallback\\\'>أبو هيثم</div>'">
-        </div>
-        <h1 id="site-title">مطعم أبو هيثم</h1>
-        <p class="slogan" id="site-slogan">أصل التسوية والمذاق الأصيل</p>
-    </header>
+<header class="header">
+  <h1>مطعم أبو هيثم</h1>
+</header>
 
-    <!-- Sticky Navigation Tabs -->
-    <nav class="category-nav" id="category-nav" aria-label="أقسام المنيو">
-        <!-- Generated Dynamically -->
-    </nav>
+<section class="offers">
+  <div class="offer-card main-offer">
+    <h2>وجبة الأكيلة 🔥</h2>
+    <p class="badge">الأكثر طلبًا</p>
+    <p class="price">80 جنيه</p>
+    <button data-name="وجبة الأكيلة" data-price="80" class="add-btn">اطلب الآن</button>
+  </div>
 
-    <!-- Main Menu Container -->
-    <main id="menu-container">
-        <!-- Rendered by JS -->
-        <p style="text-align: center; padding: 2rem;">جاري تحميل أشهى الأطباق... ⏳</p>
-    </main>
-
-    <!-- Footer Section -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <h3 id="footer-title">مطعم أبو هيثم</h3>
-            <p><strong id="footer-address">العنوان:</strong> <span id="footer-address-val">74 شارع مجلس الشعب – السيدة زينب</span></p>
-            
-            <div class="action-buttons">
-                <a href="https://maps.google.com" target="_blank" class="btn-map" id="btn-map-text">📍 الاتجاهات على الخريطة</a>
-                <a href="https://facebook.com" target="_blank" class="btn-social">👍 فيسبوك</a>
-            </div>
-
-            <div class="contact-phones">
-                <p><strong id="footer-contact">للتواصل والطلبات:</strong></p>
-                <a href="tel:0223927387" dir="ltr">02 23927387</a> - 
-                <a href="tel:01032858119" dir="ltr">01032858119</a> - 
-                <a href="tel:01070057759" dir="ltr">01070057759</a>
-            </div>
-            <p class="footer-note" id="footer-note">جودة وطعم يتحدى الجميع</p>
-        </div>
-    </footer>
-
-    <!-- Floating Cart (Frictionless Orders) -->
-    <div id="floating-cart" class="floating-cart" onclick="openCartModal()">
-        <div class="cart-info">
-            <span class="cart-items-count" id="cart-count">0 عناصر</span>
-            <span class="cart-total" id="cart-total">الإجمالي: 0 جنيه</span>
-        </div>
-        <button class="btn-checkout" id="btn-review-order" aria-label="مراجعة الطلب">
-            <span id="btn-review-text">مراجعة الطلب</span>
-        </button>
+  <div class="offers-row">
+    <div class="offer-card">
+      <h3>عرض السعادة</h3>
+      <p class="price">65 جنيه</p>
+      <button data-name="عرض السعادة" data-price="65" class="add-btn">اطلب</button>
     </div>
 
-    <!-- Cart Modal (v1.1 Additions) -->
-    <div id="cart-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-cart-title">سلة طلباتك</h2>
-                <button onclick="closeCartModal()" class="btn-close">×</button>
-            </div>
-            <div id="cart-items-container" class="cart-items-container">
-                <!-- Populated by JS -->
-            </div>
-            
-            <div class="modal-footer">
-                <div class="modal-total" id="modal-total-display">الإجمالي: 0 جنيه</div>
-                
-                <!-- Business Hours Guard (e.g., from 1 PM to 3 AM) -->
-                <div id="business-hours-notice" class="hidden" style="color: var(--primary); font-size: 0.85rem; text-align: center; margin-bottom: 0.5rem; font-weight: bold;">
-                    عفواً، المطعم مغلق الآن. نستقبل الطلبات من 1 ظهراً حتى 3 فجراً.
-                </div>
-                
-                <button class="btn-checkout w-100" id="btn-checkout" aria-label="إرسال الطلب عبر واتساب">
-                    <span id="btn-checkout-text">تأكيد الطلب واتساب</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
+    <div class="offer-card">
+      <h3>عرض الملوك</h3>
+      <p class="price">120 جنيه</p>
+      <button data-name="عرض الملوك" data-price="120" class="add-btn">اطلب</button>
     </div>
+  </div>
+</section>
 
-    <!-- Scripts -->
-    <script src="scripts/cart.js"></script>
-    <script src="scripts/whatsapp.js"></script>
-    <script src="scripts/app.js"></script>
+<section class="products">
+  <div class="product-card">
+    <h3>🥪 كبدة بانيه</h3>
+    <button data-name="كبدة فينو" data-price="20" class="add-btn">فينو — 20 جنيه</button>
+    <button data-name="كبدة نص بلدي" data-price="25" class="add-btn">نص بلدي — 25 جنيه</button>
+    <button data-name="كبدة بلدي" data-price="30" class="add-btn">بلدي — 30 جنيه</button>
+  </div>
 
-    <!-- Service Worker Registration for Offline Cache -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .catch(() => {}); // Fail silently if blocked by file:// protocol
-        });
-      }
-    </script>
+  <div class="product-card">
+    <h3>🥪 سجق</h3>
+    <button data-name="سجق فينو" data-price="20" class="add-btn">فينو — 20 جنيه</button>
+    <button data-name="سجق نص بلدي" data-price="25" class="add-btn">نص بلدي — 25 جنيه</button>
+    <button data-name="سجق بلدي" data-price="30" class="add-btn">بلدي — 30 جنيه</button>
+  </div>
+</section>
+
+<section class="bulk">
+  <h2>طلبات بالكيلو</h2>
+  <div class="product-card">
+    <button data-name="كبدة كيلو" data-price="440" class="add-btn">كبدة بانيه — 440 جنيه</button>
+    <button data-name="فراخ كيلو" data-price="440" class="add-btn">فراخ بانيه — 440 جنيه</button>
+    <button data-name="مخ كيلو" data-price="1000" class="add-btn">مخ بانيه — 1000 جنيه</button>
+  </div>
+</section>
+
+<div class="cart-bar" id="cartBar">
+  <span id="cartText">🛒 0 عناصر | 0 جنيه</span>
+  <button id="orderBtn">اطلب الآن</button>
+</div>
+
+<script src="app.js" defer></script>
+
 </body>
 </html>
