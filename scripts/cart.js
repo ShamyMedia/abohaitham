@@ -2,15 +2,25 @@
  * Cart State Management (Array approach for friction-less ordering + localStorage)
  */
 
+const SafeStorage = {
+    get: (key) => {
+        try { return window.localStorage.getItem(key); }
+        catch (e) { return null; }
+    },
+    set: (key, val) => {
+        try { window.localStorage.setItem(key, val); }
+        catch (e) { console.warn('Storage locked: Using memory only.'); }
+    }
+};
+
 let cart = [];
 try {
-    const savedCart = localStorage.getItem('abuHaithamCart');
+    const savedCart = SafeStorage.get('abuHaithamCart');
     if (savedCart) {
         cart = JSON.parse(savedCart);
-        if (!Array.isArray(cart)) cart = []; // Guard against corrupted non-array data
+        if (!Array.isArray(cart)) cart = [];
     }
 } catch (e) {
-    console.warn("Cart data reset due to parsing error");
     cart = [];
 }
 
@@ -136,6 +146,16 @@ function closeCartModal() {
     cartModal.classList.add('hidden');
 }
 
+function cartEscapeHTML(str) {
+    if (str == null) return '';
+    return str.toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 function renderCartModal() {
     cartItemsContainer.innerHTML = '';
     
@@ -145,16 +165,17 @@ function renderCartModal() {
     }
 
     cart.forEach(item => {
-        let addonsText = item.addons.map(a => a.name).join('، ');
+        let addonsText = item.addons.map(a => cartEscapeHTML(a.name)).join('، ');
         let addonsHTML = addonsText ? `<div class="c-item-addons">+ ${addonsText}</div>` : '';
         
         // Escape signature for HTML onClick
         const safeSignature = item.signature.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const safeName = cartEscapeHTML(item.name);
         
         const itemHTML = `
             <div class="cart-modal-item">
                 <div class="c-item-details">
-                    <div class="c-item-name">${item.name}</div>
+                    <div class="c-item-name">${safeName}</div>
                     ${addonsHTML}
                     <div class="c-item-price">${item.totalUnitPrice * item.quantity} ج</div>
                 </div>
@@ -223,12 +244,8 @@ function updateCartUI() {
       modalTotalDisplay.innerText = `الإجمالي: ${totalPrice} جنيه`;
   }
   
-  // Save to localStorage whenever UI updates
-  try {
-      localStorage.setItem('abuHaithamCart', JSON.stringify(cart));
-  } catch (e) {
-      console.warn('LocalStorage quota exceeded or disabled. Using memory only.', e);
-  }
+  // Save to localStorage safely whenever UI updates
+  SafeStorage.set('abuHaithamCart', JSON.stringify(cart));
   
   // Re-render modal details if it's currently open
   if (!cartModal.classList.contains('hidden')) {

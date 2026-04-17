@@ -33,11 +33,53 @@ body {
   text-align: center;
   padding: 1rem 0;
   border-bottom: 2px solid var(--secondary);
+  position: relative; /* For absolute lang button */
+}
+
+.lang-toggle-container {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+.btn-lang {
+  background: var(--secondary);
+  color: var(--dark);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
 }
 
 .header img.logo {
   max-width: 120px;
   height: auto;
+}
+
+.logo-text-fallback {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--secondary);
+  padding: 0.2rem 1rem;
+  border-radius: var(--radius);
+  border: 3px solid var(--dark);
+  box-shadow: 2px 2px 0 var(--dark);
+}
+
+.slogan {
+  font-size: 0.95rem;
+  color: #666;
+  margin-top: -0.25rem;
+  font-weight: 600;
 }
 
 h1, h2, h3 {
@@ -260,6 +302,27 @@ h1, h2, h3 {
 .footer-content p {
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.btn-map, .btn-social {
+  background: var(--light);
+  color: var(--dark) !important;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .contact-phones {

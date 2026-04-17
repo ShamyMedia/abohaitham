@@ -1,11 +1,101 @@
 /**
  * Main Application Logic
- * Fetches data, generates UI, and handles Sticky Nav
+ * Fetches data, generates UI, IntersectionObserver tracking, and Localization
  */
 
+let currentLang = 'ar';
+let menuDataCache = null;
+
+const staticStrings = {
+    'ar': {
+        'site-title': 'مطعم أبو هيثم',
+        'site-slogan': 'أصل التسوية والمذاق الأصيل',
+        'footer-title': 'مطعم أبو هيثم',
+        'footer-address': 'العنوان:',
+        'footer-address-val': '74 شارع مجلس الشعب – السيدة زينب',
+        'btn-map-text': '📍 الاتجاهات على الخريطة',
+        'footer-contact': 'للتواصل والطلبات:',
+        'footer-note': 'جودة وطعم يتحدى الجميع',
+        'btn-review-text': 'مراجعة الطلب',
+        'btn-checkout-text': 'تأكيد الطلب واتساب',
+        'modal-cart-title': 'سلة طلباتك',
+        'add-button': '+ أضف الطلب',
+        'currency': 'ج',
+        'loading': 'جاري تحميل أشهى الأطباق...',
+        'error_title': 'عذراً، المنيو غير متاح حالياً',
+        'error_desc': 'حدث خطأ أثناء تحميل البيانات أو أن نظام الطلبات تحت الصيانة.',
+        'retry': 'حاول مرة أخرى'
+    },
+    'en': {
+        'site-title': 'Abu Haitham',
+        'site-slogan': 'The Original Taste of Sayeda Zeinab',
+        'footer-title': 'Abu Haitham Restaurant',
+        'footer-address': 'Address:',
+        'footer-address-val': '74 Magles El Shaab St - Sayeda Zeinab',
+        'btn-map-text': '📍 Get Directions',
+        'footer-contact': 'Contact & Orders:',
+        'footer-note': 'Quality and Taste that defies everyone',
+        'btn-review-text': 'Review Order',
+        'btn-checkout-text': 'Confirm Order (WhatsApp)',
+        'modal-cart-title': 'Your Cart',
+        'add-button': '+ Add to Cart',
+        'currency': 'EGP',
+        'loading': 'Loading delicious dishes...',
+        'error_title': 'Sorry, the menu is currently unavailable',
+        'error_desc': 'An error occurred while loading data or the system is under maintenance.',
+        'retry': 'Try Again'
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Check saved language
+    const savedLang = localStorage.getItem('siteLang');
+    if (savedLang === 'en') {
+        currentLang = 'en';
+        applyStaticTranslations();
+    }
     fetchMenuData();
 });
+
+function toggleLanguage() {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    localStorage.setItem('siteLang', currentLang);
+    applyStaticTranslations();
+    
+    // Re-render menu using cached data to apply JSON translations
+    if (menuDataCache) {
+        generateNavigation(menuDataCache.categories);
+        generateMenu(menuDataCache.categories, menuDataCache.global_addons || []);
+        setupStickyNavHighlighting();
+    }
+    
+    if (typeof updateCartUI === 'function') {
+        updateCartUI(); // Update texts in cart
+    }
+}
+
+function applyStaticTranslations() {
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-lang').innerText = currentLang === 'ar' ? 'EN' : 'AR';
+    
+    const tryUpdate = (id, key) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = staticStrings[currentLang][key];
+    };
+
+    tryUpdate('site-title', 'site-title');
+    tryUpdate('site-slogan', 'site-slogan');
+    tryUpdate('footer-title', 'footer-title');
+    tryUpdate('footer-address', 'footer-address');
+    tryUpdate('footer-address-val', 'footer-address-val');
+    tryUpdate('btn-map-text', 'btn-map-text');
+    tryUpdate('footer-contact', 'footer-contact');
+    tryUpdate('footer-note', 'footer-note');
+    tryUpdate('btn-review-text', 'btn-review-text');
+    tryUpdate('btn-checkout-text', 'btn-checkout-text');
+    tryUpdate('modal-cart-title', 'modal-cart-title');
+}
 
 function escapeHTML(str) {
     if (str === null || str === undefined) return '';
@@ -17,36 +107,39 @@ function escapeHTML(str) {
         .replace(/'/g, "&#039;");
 }
 
+function getLocalizedStr(item, baseKey) {
+     if (currentLang === 'en' && item[baseKey + '_en']) {
+         return item[baseKey + '_en'];
+     }
+     return item[baseKey] || '';
+}
+
 async function fetchMenuData() {
     try {
-        // Using pure URL to respect Service Worker's Network-First strategy
-        // This prevents cache pollution / memory leaks from unique query params
         const response = await fetch(`menu.json`);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         
-        // --- DATA VALIDATION GUARD ---
         if (!data || !data.categories || !Array.isArray(data.categories)) {
             throw new Error('بنية المنيو غير صالحة أو معطوبة');
         }
         
+        menuDataCache = data;
         generateNavigation(data.categories);
         generateMenu(data.categories, data.global_addons || []);
         setupStickyNavHighlighting();
 
-        // --- EVENT TRACKING: PageView / MenuLoaded ---
         if (typeof window.dataLayer !== 'undefined') {
             window.dataLayer.push({ 'event': 'MenuLoaded' });
         }
-        console.log("Tracking Event Logged: MenuLoaded");
     } catch (error) {
         console.error('Failed to load menu:', error);
         document.getElementById('menu-container').innerHTML = `
             <div style="text-align: center; padding: 3rem 1rem; color: var(--primary); background: var(--light); border-radius: var(--radius); margin: 2rem; box-shadow: var(--shadow);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                <h3 style="margin-bottom: 0.5rem;">عذراً، المنيو غير متاح حالياً</h3>
-                <p style="color: #666; margin-bottom: 1.5rem;">حدث خطأ أثناء تحميل البيانات أو أن نظام الطلبات تحت الصيانة.</p>
-                <button onclick="location.reload()" style="padding: 0.75rem 1.5rem; background: var(--secondary); border: none; font-weight: bold; border-radius: 20px; cursor: pointer; color: var(--dark);">حاول مرة أخرى</button>
+                <h3 style="margin-bottom: 0.5rem;">${staticStrings[currentLang].error_title}</h3>
+                <p style="color: #666; margin-bottom: 1.5rem;">${staticStrings[currentLang].error_desc}</p>
+                <button onclick="location.reload()" style="padding: 0.75rem 1.5rem; background: var(--secondary); border: none; font-weight: bold; border-radius: 20px; cursor: pointer; color: var(--dark);">${staticStrings[currentLang].retry}</button>
             </div>
         `;
     }
@@ -54,21 +147,19 @@ async function fetchMenuData() {
 
 function generateNavigation(categories) {
     const nav = document.getElementById('category-nav');
-    nav.innerHTML = ''; // Selectively clear the nav
+    nav.innerHTML = '';
 
     categories.forEach((cat, index) => {
         const link = document.createElement('a');
         link.href = `#sec-${cat.id}`;
         link.className = `nav-link ${index === 0 ? 'active' : ''}`;
-        link.innerText = cat.name;
+        link.innerText = getLocalizedStr(cat, 'name');
         
-        // Smooth scroll handling
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             
-            // Offset for sticky nav height (~60px)
             const offsetTop = targetSection.getBoundingClientRect().top + window.scrollY - 70;
             
             window.scrollTo({
@@ -76,7 +167,6 @@ function generateNavigation(categories) {
                 behavior: 'smooth'
             });
             
-            // Update active state manually on click
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         });
@@ -87,16 +177,19 @@ function generateNavigation(categories) {
 
 function generateMenu(categories, addons) {
     const container = document.getElementById('menu-container');
-    container.innerHTML = ''; // Clear loading text
+    container.innerHTML = '';
 
     categories.forEach(cat => {
         const section = document.createElement('section');
         section.id = `sec-${escapeHTML(cat.id)}`;
         section.className = 'category-section';
 
-        let sectionHTML = `<h2 class="category-title">${escapeHTML(cat.name)}</h2>`;
-        if (cat.note) {
-            sectionHTML += `<span class="category-note">${escapeHTML(cat.note)}</span>`;
+        const catName = getLocalizedStr(cat, 'name');
+        const catNote = getLocalizedStr(cat, 'note');
+
+        let sectionHTML = `<h2 class="category-title">${escapeHTML(catName)}</h2>`;
+        if (catNote) {
+            sectionHTML += `<span class="category-note">${escapeHTML(catNote)}</span>`;
         }
 
         sectionHTML += `<div class="menu-grid">`;
@@ -111,13 +204,15 @@ function generateMenu(categories, addons) {
 
         sortedItems.forEach(item => {
             const eId = escapeHTML(item.id);
-            const eName = escapeHTML(item.name);
-            const ePrice = escapeHTML(item.price);
+            const itemName = getLocalizedStr(item, 'name');
+            const eName = escapeHTML(itemName);
             const eImage = escapeHTML(item.image);
+            const itemDesc = getLocalizedStr(item, 'description');
+            const itemBadge = getLocalizedStr(item, 'badge');
             
             sectionHTML += `
             <div class="menu-card" data-id="${eId}">
-                ${item.badge ? `<span class="badge">${escapeHTML(item.badge)}</span>` : ''}
+                ${itemBadge ? `<span class="badge">${escapeHTML(itemBadge)}</span>` : ''}
                 
                 <div class="img-wrapper">
                     <img src="${eImage}" alt="${eName}" class="menu-img" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'100%\\\' height=\\\'100%\\\'><rect width=\\\'100%\\\' height=\\\'100%\\\' fill=\\\'#eee\\\'/><text x=\\\'50%\\\' y=\\\'50%\\\' font-family=\\\'sans-serif\\\' font-size=\\\'14\\\' text-anchor=\\\'middle\\\' alignment-baseline=\\\'middle\\\' fill=\\\'#999\\\'>صورة غير متوفرة</text></svg>'">
@@ -125,7 +220,7 @@ function generateMenu(categories, addons) {
                 
                 <div class="card-content">
                     <h3 class="card-title">${eName}</h3>
-                    ${item.description ? `<p class="card-desc">${escapeHTML(item.description)}</p>` : ''}
+                    ${itemDesc ? `<p class="card-desc">${escapeHTML(itemDesc)}</p>` : ''}
                     
                     <div class="price-row">
                         ${generatePriceElement(item)}
@@ -133,14 +228,14 @@ function generateMenu(categories, addons) {
 
                     ${showAddons ? generateAddonsHTML(item, addons) : ''}
 
-                    <button class="btn-add" aria-label="أضف ${eName} للسلة" onclick="addToCart('${eId}', '${eName}', ${item.price || 0})">
-                        + أضف الطلب
+                    <button class="btn-add" aria-label="${eName}" onclick="addToCart('${eId}', '${eName}', ${item.price || 0})">
+                        ${staticStrings[currentLang]['add-button']}
                     </button>
                 </div>
             </div>`;
         });
 
-        sectionHTML += `</div>`; // Close menu-grid
+        sectionHTML += `</div>`;
         section.innerHTML = sectionHTML;
         container.appendChild(section);
     });
@@ -150,10 +245,11 @@ function generateAddonsHTML(item, addons) {
     if (!addons || addons.length === 0) return '';
     let html = '<div class="quick-addons">';
     addons.forEach(addon => {
+        const addonName = getLocalizedStr(addon, 'name');
         html += `
         <label class="addon-label">
-            <input type="checkbox" class="addon-checkbox" data-for="${escapeHTML(item.id)}" data-name="${escapeHTML(addon.name)}" data-price="${escapeHTML(addon.price)}">
-            ${escapeHTML(addon.name)} <span class="addon-price">(+${escapeHTML(addon.price)})</span>
+            <input type="checkbox" class="addon-checkbox" data-for="${escapeHTML(item.id)}" data-name="${escapeHTML(addonName)}" data-price="${escapeHTML(addon.price)}">
+            ${escapeHTML(addonName)} <span class="addon-price">(+${escapeHTML(addon.price)})</span>
         </label>`;
     });
     html += '</div>';
@@ -161,59 +257,61 @@ function generateAddonsHTML(item, addons) {
 }
 
 function generatePriceElement(item) {
+    const currency = staticStrings[currentLang].currency;
     if (item.variants && item.variants.length > 0) {
         let selectHTML = `<select class="variants-select" data-for="${escapeHTML(item.id)}" onchange="updateDisplayedPrice(this, '${escapeHTML(item.id)}')">`;
         item.variants.forEach((v, idx) => {
-            selectHTML += `<option value="${idx}" data-price="${escapeHTML(v.price)}" data-size="${escapeHTML(v.size)}">${escapeHTML(v.size)} - ${escapeHTML(v.price)} ج</option>`;
+            const sizeName = getLocalizedStr(v, 'size');
+            selectHTML += `<option value="${idx}" data-price="${escapeHTML(v.price)}" data-size="${escapeHTML(sizeName)}">${escapeHTML(sizeName)} - ${escapeHTML(v.price)} ${currency}</option>`;
         });
         selectHTML += `</select>`;
         
-        // Display initially the price of the first variant
         return `
-            <span class="price-value" id="price-display-${escapeHTML(item.id)}">${escapeHTML(item.variants[0].price)} ج</span>
+            <span class="price-value" id="price-display-${escapeHTML(item.id)}">${escapeHTML(item.variants[0].price)} ${currency}</span>
             ${selectHTML}
         `;
     } else {
-        return `<span class="price-value" id="price-display-${escapeHTML(item.id)}">${escapeHTML(item.price)} ج</span>`;
+        return `<span class="price-value" id="price-display-${escapeHTML(item.id)}">${escapeHTML(item.price)} ${currency}</span>`;
     }
 }
 
-// Global function to update price when variant changes
 window.updateDisplayedPrice = function(selectElement, itemId) {
+    const currency = staticStrings[currentLang].currency;
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     const newPrice = selectedOption.dataset.price;
-    document.getElementById(`price-display-${itemId}`).innerText = `${newPrice} ج`;
+    document.getElementById(`price-display-${itemId}`).innerText = `${newPrice} ${currency}`;
 }
 
+// FIX: Anti-Lag scroll listener using IntersectionObserver
 function setupStickyNavHighlighting() {
     const sections = document.querySelectorAll('.category-section');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    window.addEventListener('scroll', () => {
-        let current = '';
+    // Create an observer
+    const observerOptions = {
+        root: null,
+        rootMargin: '-80px 0px -60% 0px', // Triggers when section is near top
+        threshold: 0
+    };
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            // Subtract navbar height + some buffer
-            if (scrollY >= (sectionTop - 80)) { 
-                current = section.getAttribute('id');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const currentId = entry.target.getAttribute('id');
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentId}`) {
+                        link.classList.add('active');
+                        // Scroll nav on mobile smoothly
+                        link.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                    }
+                });
             }
         });
+    }, observerOptions);
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-                
-                // Optional: scroll nav to keep active item in view on mobile
-                const nav = document.getElementById('category-nav');
-                const linkRect = link.getBoundingClientRect();
-                const navRect = nav.getBoundingClientRect();
-                
-                if (linkRect.left < navRect.left || linkRect.right > navRect.right) {
-                    link.scrollIntoView({ behavior: "smooth", inline: "center" });
-                }
-            }
-        });
+    sections.forEach(section => {
+        observer.observe(section);
     });
 }

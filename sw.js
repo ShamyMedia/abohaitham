@@ -55,7 +55,17 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => caches.match(event.request).then(cachedResponse => {
+            if (cachedResponse) return cachedResponse;
+            // Native Offline Fallback if both fail
+            if (event.request.headers.get('accept').includes('text/html') || url.pathname === '/') {
+                return new Response(
+                    `<!DOCTYPE html><html dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>غير متصل - أبو هيثم</title><style>body{font-family:'Segoe UI',sans-serif;text-align:center;padding:15vh 20px;color:#D32F2F;background:#fcfcfc;}</style></head><body><h2>🔴 عذراً، لا يوجد اتصال بالإنترنت</h2><p>لم تقم بزيارة هذه الصفحة مسبقاً ليتم تخزينها. يرجى تفعيل الشبكة والمحاولة.</p><button onclick="location.reload()" style="padding:10px 20px;font-weight:bold;margin-top:20px;background:#FFC107;border:none;border-radius:20px;">إعادة المحاولة</button></body></html>`,
+                    { headers: { 'Content-Type': 'text/html; charset=utf-8' } }
+                );
+            }
+            return new Response('{"error": "offline"}', { headers: { 'Content-Type': 'application/json' } });
+        }))
     );
     return;
   }
