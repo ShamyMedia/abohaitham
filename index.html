@@ -1,71 +1,58 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مطعم أبو هيثم</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>مطعم أبو هيثم</title>
+
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/menu.css">
+<link rel="stylesheet" href="styles/mobile.css">
+
+<script>
+window.cart = [];
+window.menuDataCache = null;
+</script>
+
 </head>
+
 <body>
 
 <header class="header">
-  <h1>مطعم أبو هيثم</h1>
+    <button id="btn-lang">EN</button>
+    <h1 id="site-title">مطعم أبو هيثم</h1>
 </header>
 
-<section class="offers">
-  <div class="offer-card main-offer">
-    <h2>وجبة الأكيلة 🔥</h2>
-    <p class="badge">الأكثر طلبًا</p>
-    <p class="price">80 جنيه</p>
-    <button data-name="وجبة الأكيلة" data-price="80" class="add-btn">اطلب الآن</button>
-  </div>
+<nav id="category-nav"></nav>
 
-  <div class="offers-row">
-    <div class="offer-card">
-      <h3>عرض السعادة</h3>
-      <p class="price">65 جنيه</p>
-      <button data-name="عرض السعادة" data-price="65" class="add-btn">اطلب</button>
-    </div>
+<main id="menu-container">
+    <p>جاري التحميل...</p>
+</main>
 
-    <div class="offer-card">
-      <h3>عرض الملوك</h3>
-      <p class="price">120 جنيه</p>
-      <button data-name="عرض الملوك" data-price="120" class="add-btn">اطلب</button>
-    </div>
-  </div>
-</section>
-
-<section class="products">
-  <div class="product-card">
-    <h3>🥪 كبدة بانيه</h3>
-    <button data-name="كبدة فينو" data-price="20" class="add-btn">فينو — 20 جنيه</button>
-    <button data-name="كبدة نص بلدي" data-price="25" class="add-btn">نص بلدي — 25 جنيه</button>
-    <button data-name="كبدة بلدي" data-price="30" class="add-btn">بلدي — 30 جنيه</button>
-  </div>
-
-  <div class="product-card">
-    <h3>🥪 سجق</h3>
-    <button data-name="سجق فينو" data-price="20" class="add-btn">فينو — 20 جنيه</button>
-    <button data-name="سجق نص بلدي" data-price="25" class="add-btn">نص بلدي — 25 جنيه</button>
-    <button data-name="سجق بلدي" data-price="30" class="add-btn">بلدي — 30 جنيه</button>
-  </div>
-</section>
-
-<section class="bulk">
-  <h2>طلبات بالكيلو</h2>
-  <div class="product-card">
-    <button data-name="كبدة كيلو" data-price="440" class="add-btn">كبدة بانيه — 440 جنيه</button>
-    <button data-name="فراخ كيلو" data-price="440" class="add-btn">فراخ بانيه — 440 جنيه</button>
-    <button data-name="مخ كيلو" data-price="1000" class="add-btn">مخ بانيه — 1000 جنيه</button>
-  </div>
-</section>
-
-<div class="cart-bar" id="cartBar">
-  <span id="cartText">🛒 0 عناصر | 0 جنيه</span>
-  <button id="orderBtn">اطلب الآن</button>
+<div id="floating-cart" class="floating-cart" style="display:none;">
+    <span id="cart-count">0</span>
+    <span id="cart-total">0</span>
+    <button id="btn-checkout">واتساب</button>
 </div>
 
-<script src="app.js" defer></script>
+<div id="cart-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <div id="cart-items-container"></div>
+        <div id="modal-total-display"></div>
+        <button onclick="closeCartModal()">إغلاق</button>
+    </div>
+</div>
+
+<script src="scripts/app.js"></script>
+<script src="scripts/cart.js"></script>
+<script src="scripts/whatsapp.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
 
 </body>
 </html>
