@@ -205,13 +205,16 @@ function buildCard(item, globalAddons) {
     }
 
     if (item.image) {
+        const wrap = document.createElement("div");
+        wrap.className = "menu-img-wrap";
         const img = document.createElement("img");
         img.className = "menu-img";
         img.src = item.image;
         img.alt = t(item, "name");
         img.loading = "lazy";
-        img.onerror = () => { img.style.display = "none"; };
-        card.appendChild(img);
+        img.onerror = () => { wrap.style.display = "none"; };
+        wrap.appendChild(img);
+        card.appendChild(wrap);
     }
 
     const info = document.createElement("div");
