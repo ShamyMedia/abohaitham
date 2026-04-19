@@ -41,10 +41,13 @@ function updateCartUI() {
         count += i.qty;
     });
 
+    const currency = (typeof ui === "function") ? ui("currency") : "جنيه";
+    const countLabel = (typeof ui === "function") ? ui("cartCount") : "عناصر";
+
     const c1 = document.getElementById("cart-count");
     const c2 = document.getElementById("cart-total");
-    if (c1) c1.innerText = count + " عناصر";
-    if (c2) c2.innerText = total + " جنيه";
+    if (c1) c1.innerText = count + " " + countLabel;
+    if (c2) c2.innerText = total + " " + currency;
 
     Storage.set("cart", JSON.stringify(cart));
 
@@ -70,12 +73,16 @@ function renderCart() {
     const box = document.getElementById("cart-items-container");
     if (!box) return;
 
+    const currency = (typeof ui === "function") ? ui("currency") : "جنيه";
+    const emptyText = (typeof ui === "function") ? ui("cartEmpty") : "السلة فارغة";
+    const deleteText = (typeof ui === "function") ? ui("cartCount") : "حذف";
+
     box.innerHTML = "";
 
     if (cart.length === 0) {
         const empty = document.createElement("p");
         empty.className = "cart-empty";
-        empty.textContent = "السلة فارغة";
+        empty.textContent = emptyText;
         box.appendChild(empty);
         return;
     }
@@ -85,11 +92,11 @@ function renderCart() {
         row.className = "cart-item";
 
         const info = document.createElement("span");
-        info.textContent = i.name + " × " + i.qty + " — " + (i.price * i.qty) + " جنيه";
+        info.textContent = i.name + " × " + i.qty + " — " + (i.price * i.qty) + " " + currency;
 
         const delBtn = document.createElement("button");
         delBtn.className = "cart-item-remove";
-        delBtn.textContent = "حذف";
+        delBtn.textContent = "✕";
         delBtn.setAttribute("aria-label", "حذف " + i.name);
         delBtn.addEventListener("click", () => removeFromCart(i.id));
 
@@ -98,10 +105,12 @@ function renderCart() {
         box.appendChild(row);
     });
 
-    // إجمالي
     const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
     const totalEl = document.getElementById("modal-total-display");
-    if (totalEl) totalEl.textContent = "الإجمالي: " + total + " جنيه";
+    if (totalEl) {
+        const totalLabel = (typeof ui === "function") ? ui("total") : "الإجمالي";
+        totalEl.textContent = totalLabel + ": " + total + " " + currency;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", initCart);

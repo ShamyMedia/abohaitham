@@ -1,19 +1,102 @@
 let currentLang = "ar";
 let menuDataCache = null;
 
+/* ========================= نصوص الواجهة ========================= */
+const UI_TEXT = {
+    ar: {
+        loading:       "جاري التحميل...",
+        error:         "تعذّر تحميل المنيو. تحقق من الاتصال وأعد المحاولة.",
+        retry:         "إعادة المحاولة",
+        chooseSize:    "اختار الحجم",
+        addons:        "إضافات (اختياري)",
+        chooseSizeAlert: "اختار الحجم أولاً",
+        addToCart:     "إضافة للسلة",
+        selectBtn:     "اختيار",
+        cartTitle:     "السلة",
+        cartEmpty:     "السلة فارغة",
+        checkout:      "تأكيد الطلب عبر واتساب 📲",
+        currency:      "جنيه",
+        from:          "من",
+        total:         "الإجمالي",
+        siteTitle:     "مطعم أبو هيثم",
+        siteSlogan:    "أصل التسوية والمذاق الأصيل",
+        footerTitle:   "مطعم أبو هيثم",
+        footerSlogan:  "أصل التسوية والمذاق الأصيل",
+        mapText:       "الموقع على الخريطة",
+        cartCount:     "عناصر",
+    },
+    en: {
+        loading:       "Loading...",
+        error:         "Failed to load menu. Check your connection and try again.",
+        retry:         "Retry",
+        chooseSize:    "Choose Size",
+        addons:        "Add-ons (optional)",
+        chooseSizeAlert: "Please choose a size first",
+        addToCart:     "Add to Cart",
+        selectBtn:     "Select",
+        cartTitle:     "Cart",
+        cartEmpty:     "Cart is empty",
+        checkout:      "Confirm Order via WhatsApp 📲",
+        currency:      "EGP",
+        from:          "From",
+        total:         "Total",
+        siteTitle:     "Abu Haitham Restaurant",
+        siteSlogan:    "Authentic Flavor & Heritage",
+        footerTitle:   "Abu Haitham Restaurant",
+        footerSlogan:  "Authentic Flavor & Heritage",
+        mapText:       "View on Map",
+        cartCount:     "items",
+    }
+};
+
+function ui(key) {
+    return UI_TEXT[currentLang][key] || UI_TEXT["ar"][key];
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchMenuData();
 });
 
-function getEl(id) {
-    return document.getElementById(id);
-}
+function getEl(id) { return document.getElementById(id); }
 
 function toggleLanguage() {
     currentLang = currentLang === "ar" ? "en" : "ar";
+
+    // اتجاه الصفحة
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+
+    // زرار اللغة
     const btn = getEl("btn-lang");
     if (btn) btn.textContent = currentLang === "ar" ? "EN" : "ع";
+
+    // هيدر
+    const siteTitle = getEl("site-title");
+    if (siteTitle) siteTitle.textContent = ui("siteTitle");
+    const siteSlogan = getEl("site-slogan");
+    if (siteSlogan) siteSlogan.textContent = ui("siteSlogan");
+
+    // فوتر
+    const footerTitle = getEl("footer-title");
+    if (footerTitle) footerTitle.textContent = ui("footerTitle");
+    const footerSlogan = getEl("footer-slogan");
+    if (footerSlogan) footerSlogan.textContent = ui("footerSlogan");
+    const footerMapText = getEl("footer-map-text");
+    if (footerMapText) footerMapText.textContent = ui("mapText");
+
+    // زرار الـ checkout
+    const checkout = getEl("btn-checkout");
+    if (checkout) checkout.textContent = ui("checkout");
+
+    // عنوان السلة
+    const cartTitle = getEl("cart-title");
+    if (cartTitle) cartTitle.textContent = ui("cartTitle");
+
+    // إعادة رسم المنيو
     if (menuDataCache) generateMenu(menuDataCache);
+
+    // تحديث عدد عناصر السلة
+    if (typeof updateCartUI === "function") updateCartUI();
 }
 
 function t(item, field) {
@@ -22,6 +105,15 @@ function t(item, field) {
 }
 
 async function fetchMenuData() {
+    const container = getEl("menu-container");
+    if (container) {
+        container.innerHTML = "";
+        const msg = document.createElement("p");
+        msg.className = "loading-msg";
+        msg.textContent = ui("loading");
+        container.appendChild(msg);
+    }
+
     try {
         const res = await fetch("menu.json");
         if (!res.ok) throw new Error("network");
@@ -29,18 +121,17 @@ async function fetchMenuData() {
         if (!menuDataCache.categories) throw new Error("format");
         generateMenu(menuDataCache);
     } catch(e) {
-        const el = getEl("menu-container");
-        if (el) {
-            el.innerHTML = "";
+        if (container) {
+            container.innerHTML = "";
             const msg = document.createElement("p");
             msg.style.cssText = "text-align:center;padding:2rem;color:#c00;";
-            msg.textContent = "تعذّر تحميل المنيو. تحقق من الاتصال وأعد المحاولة.";
+            msg.textContent = ui("error");
             const retry = document.createElement("button");
-            retry.textContent = "إعادة المحاولة";
+            retry.textContent = ui("retry");
             retry.style.cssText = "display:block;margin:1rem auto;padding:.6rem 1.5rem;background:#D32F2F;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-size:1rem;";
             retry.addEventListener("click", fetchMenuData);
-            el.appendChild(msg);
-            el.appendChild(retry);
+            container.appendChild(msg);
+            container.appendChild(retry);
         }
     }
 }
@@ -94,8 +185,7 @@ function generateMenu(data) {
         grid.className = "menu-grid";
 
         cat.items.forEach(item => {
-            const card = buildCard(item, data.global_addons);
-            grid.appendChild(card);
+            grid.appendChild(buildCard(item, data.global_addons));
         });
 
         section.appendChild(grid);
@@ -110,7 +200,7 @@ function buildCard(item, globalAddons) {
     if (item.badge) {
         const badge = document.createElement("span");
         badge.className = "card-badge";
-        badge.textContent = item.badge;
+        badge.textContent = currentLang === "en" && item.badge_en ? item.badge_en : item.badge;
         card.appendChild(badge);
     }
 
@@ -141,17 +231,16 @@ function buildCard(item, globalAddons) {
     const price = document.createElement("p");
     price.className = "price-hint";
     if (item.variants && item.variants.length) {
-        price.textContent = "من " + item.variants[0].price + " جنيه";
+        price.textContent = ui("from") + " " + item.variants[0].price + " " + ui("currency");
     } else {
-        price.textContent = item.price + " جنيه";
+        price.textContent = item.price + " " + ui("currency");
     }
     info.appendChild(price);
-
     card.appendChild(info);
 
     const btn = document.createElement("button");
     btn.className = "btn-add";
-    btn.textContent = "اختيار";
+    btn.textContent = ui("selectBtn");
     btn.addEventListener("click", () => openItemModal(item, globalAddons));
     card.appendChild(btn);
 
@@ -203,7 +292,7 @@ function openItemModal(item, globalAddons) {
     if (item.variants && item.variants.length) {
         const vTitle = document.createElement("p");
         vTitle.className = "modal-section-title";
-        vTitle.textContent = "اختار الحجم";
+        vTitle.textContent = ui("chooseSize");
         body.appendChild(vTitle);
 
         const variantsWrap = document.createElement("div");
@@ -212,7 +301,7 @@ function openItemModal(item, globalAddons) {
         item.variants.forEach(v => {
             const btn = document.createElement("button");
             btn.className = "variant-btn";
-            btn.textContent = (currentLang === "en" && v.size_en ? v.size_en : v.size) + " — " + v.price + " جنيه";
+            btn.textContent = (currentLang === "en" && v.size_en ? v.size_en : v.size) + " — " + v.price + " " + ui("currency");
             btn.addEventListener("click", () => {
                 selectedVariant = v;
                 variantsWrap.querySelectorAll(".variant-btn").forEach(b => b.classList.remove("active"));
@@ -227,7 +316,7 @@ function openItemModal(item, globalAddons) {
     if (globalAddons && globalAddons.length) {
         const aTitle = document.createElement("p");
         aTitle.className = "modal-section-title";
-        aTitle.textContent = "إضافات (اختياري)";
+        aTitle.textContent = ui("addons");
         body.appendChild(aTitle);
 
         globalAddons.forEach(a => {
@@ -239,7 +328,7 @@ function openItemModal(item, globalAddons) {
                 if (checkbox.checked) selectedAddons.add(a);
                 else selectedAddons.delete(a);
             });
-            const txt = document.createTextNode(t(a, "name") + " (+" + a.price + " جنيه)");
+            const txt = document.createTextNode(t(a, "name") + " (+" + a.price + " " + ui("currency") + ")");
             label.appendChild(checkbox);
             label.appendChild(txt);
             body.appendChild(label);
@@ -252,11 +341,11 @@ function openItemModal(item, globalAddons) {
 
     const addBtn = document.createElement("button");
     addBtn.className = "btn-add-to-cart";
-    addBtn.textContent = "إضافة للسلة";
+    addBtn.textContent = ui("addToCart");
 
     addBtn.addEventListener("click", () => {
         if (item.variants && item.variants.length && !selectedVariant) {
-            alert("اختار الحجم أولاً");
+            alert(ui("chooseSizeAlert"));
             return;
         }
 
