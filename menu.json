@@ -1,0 +1,201 @@
+{
+  "global_addons": [
+    { "id": "ga1", "name": "علبة طحينة مخصوصة", "name_en": "Special Tahini", "price": 5 },
+    { "id": "ga2", "name": "سلطة بلدي مشطشطة", "name_en": "Spicy Baladi Salad", "price": 5 },
+    { "id": "ga3", "name": "لتر كولا", "name_en": "1L Cola", "price": 20 }
+  ],
+  "categories": [
+    {
+      "id": "family-offers",
+      "name": "العروض العائلية",
+      "name_en": "Family Offers",
+      "items": [
+        {
+          "id": "f1", "name": "عرض السعادة", "name_en": "Happiness Offer",
+          "price": 500, "image": "images/offer-saada.webp",
+          "description": "1/3 كبدة + 1/3 بانيه + 1/8 مخ + بطاطس شيبس + لتر ساقع",
+          "description_en": "1/3 Liver + 1/3 Pane + 1/8 Brain + Chips + Cola"
+        },
+        {
+          "id": "f2", "name": "عرض اللمة", "name_en": "Gathering Offer",
+          "price": 775, "image": "images/offer-lamma.webp",
+          "description": "1/2 كبدة + 1/2 بانيه + 1/4 مخ + بطاطس شيبس + لتر ساقع",
+          "description_en": "1/2 Liver + 1/2 Pane + 1/4 Brain + Chips + Cola",
+          "badge": "🔥 الأكثر طلبًا", "highlight": true
+        },
+        {
+          "id": "f3", "name": "عرض الملوك", "name_en": "Kings Offer",
+          "price": 1000, "image": "images/offer-molok.webp",
+          "description": "3/4 كبدة + 3/4 بانيه + 1/4 مخ + بطاطس شيبس + لتر ساقع",
+          "description_en": "3/4 Liver + 3/4 Pane + 1/4 Brain + Chips + Cola"
+        },
+        {
+          "id": "f4", "name": "عرض أبو هيثم", "name_en": "Abu Haitham Offer",
+          "price": 1250, "image": "images/offer-abuhaitham.webp",
+          "description": "كيلو كبدة + كيلو بانيه + 1/4 مخ + بطاطس شيبس + لتر ساقع",
+          "description_en": "1 Kilo Liver + 1 Kilo Pane + 1/4 Brain + Chips + Cola"
+        }
+      ]
+    },
+    {
+      "id": "sandwiches",
+      "name": "السندوتشات",
+      "name_en": "Sandwiches",
+      "items": [
+        {
+          "id": "s1", "name": "كبدة بانيه", "name_en": "Liver Pane",
+          "price": 20, "image": "images/sand-kebda.webp",
+          "variants": [
+            { "id": "fino", "size": "فينو", "size_en": "Fino", "price": 20 },
+            { "id": "half_baladi", "size": "نص بلدي", "size_en": "Half Baladi", "price": 25 },
+            { "id": "mutabaq", "size": "مطبق", "size_en": "Mutabaq", "price": 30 }
+          ]
+        },
+        {
+          "id": "s2", "name": "مخ بانيه", "name_en": "Brain Pane",
+          "price": 50, "image": "images/sand-mokh.webp",
+          "variants": [
+            { "id": "fino", "size": "فينو", "size_en": "Fino", "price": 50 },
+            { "id": "half_baladi", "size": "نص بلدي", "size_en": "Half Baladi", "price": 55 },
+            { "id": "mutabaq", "size": "مطبق", "size_en": "Mutabaq", "price": 60 }
+          ]
+        },
+        {
+          "id": "s3", "name": "فراخ بانيه", "name_en": "Chicken Pane",
+          "price": 25, "image": "images/sand-chicken.webp",
+          "variants": [
+            { "id": "fino", "size": "فينو", "size_en": "Fino", "price": 25 },
+            { "id": "half_baladi", "size": "نص بلدي", "size_en": "Half Baladi", "price": 30 },
+            { "id": "mutabaq", "size": "مطبق", "size_en": "Mutabaq", "price": 35 }
+          ]
+        },
+        {
+          "id": "s4", "name": "مشكل كبدة ومخ", "name_en": "Mix Liver & Brain",
+          "price": 40, "image": "images/sand-mix-kebda-mokh.webp",
+          "variants": [
+            { "id": "fino", "size": "فينو", "size_en": "Fino", "price": 40 },
+            { "id": "half_baladi", "size": "نص بلدي", "size_en": "Half Baladi", "price": 45 },
+            { "id": "mutabaq", "size": "مطبق", "size_en": "Mutabaq", "price": 50 }
+          ]
+        },
+        {
+          "id": "s5", "name": "مشكل كبدة وفراخ", "name_en": "Mix Liver & Chicken",
+          "price": 40, "image": "images/sand-mix-kebda-chicken.webp",
+          "variants": [
+            { "id": "fino", "size": "فينو", "size_en": "Fino", "price": 40 },
+            { "id": "half_baladi", "size": "نص بلدي", "size_en": "Half Baladi", "price": 45 },
+            { "id": "mutabaq", "size": "مطبق", "size_en": "Mutabaq", "price": 50 }
+          ]
+        },
+        {
+          "id": "s6", "name": "مشكل 3 أصناف", "name_en": "3 Mix Sandwiches",
+          "price": 50, "image": "images/sand-mix-3.webp",
+          "variants": [
+            { "id": "fino", "size": "فينو", "size_en": "Fino", "price": 50 },
+            { "id": "half_baladi", "size": "نص بلدي", "size_en": "Half Baladi", "price": 55 },
+            { "id": "mutabaq", "size": "مطبق", "size_en": "Mutabaq", "price": 60 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meals",
+      "name": "الوجبات",
+      "name_en": "Meals",
+      "note": "تُقدم ساخنة مع السلطات والخبز الطازج",
+      "items": [
+        {
+          "id": "m1", "name": "كبدة بانيه", "name_en": "Liver Pane",
+          "price": 60, "image": "images/meal-kebda.webp",
+          "variants": [
+            { "id": "small", "size": "طلب ثُمن ك", "size_en": "Small 1/8 kg", "price": 60 },
+            { "id": "medium", "size": "مخصوص ربع ك", "size_en": "Medium 1/4 kg", "price": 85 },
+            { "id": "large", "size": "أكيلة نص ك", "size_en": "Large 1/2 kg", "price": 110 }
+          ]
+        },
+        {
+          "id": "m2", "name": "مخ بانيه", "name_en": "Brain Pane",
+          "price": 125, "image": "images/meal-mokh.webp",
+          "variants": [
+            { "id": "small", "size": "طلب ثُمن ك", "size_en": "Small 1/8 kg", "price": 125 },
+            { "id": "medium", "size": "مخصوص ربع ك", "size_en": "Medium 1/4 kg", "price": 190 },
+            { "id": "large", "size": "أكيلة نص ك", "size_en": "Large 1/2 kg", "price": 250 }
+          ]
+        },
+        {
+          "id": "m3", "name": "فراخ بانيه", "name_en": "Chicken Pane",
+          "price": 65, "image": "images/meal-chicken.webp",
+          "variants": [
+            { "id": "small", "size": "طلب ثُمن ك", "size_en": "Small 1/8 kg", "price": 65 },
+            { "id": "medium", "size": "مخصوص ربع ك", "size_en": "Medium 1/4 kg", "price": 85 },
+            { "id": "large", "size": "أكيلة نص ك", "size_en": "Large 1/2 kg", "price": 110 }
+          ]
+        },
+        {
+          "id": "m4", "name": "مشكل كبدة ومخ", "name_en": "Mix Liver & Brain",
+          "price": 100, "image": "images/meal-mix-kebda-mokh.webp",
+          "variants": [
+            { "id": "small", "size": "طلب ثُمن ك", "size_en": "Small 1/8 kg", "price": 100 },
+            { "id": "medium", "size": "مخصوص ربع ك", "size_en": "Medium 1/4 kg", "price": 135 },
+            { "id": "large", "size": "أكيلة نص ك", "size_en": "Large 1/2 kg", "price": 175 }
+          ]
+        },
+        {
+          "id": "m5", "name": "مشكل كبدة وفراخ", "name_en": "Mix Liver & Chicken",
+          "price": 90, "image": "images/meal-mix-kebda-chicken.webp",
+          "variants": [
+            { "id": "small", "size": "طلب ثُمن ك", "size_en": "Small 1/8 kg", "price": 90 },
+            { "id": "medium", "size": "مخصوص ربع ك", "size_en": "Medium 1/4 kg", "price": 110 },
+            { "id": "large", "size": "أكيلة نص ك", "size_en": "Large 1/2 kg", "price": 130 }
+          ]
+        },
+        {
+          "id": "m6", "name": "مشكل 3 أصناف", "name_en": "3 Mix Meal",
+          "price": 140, "image": "images/meal-mix-3.webp",
+          "variants": [
+            { "id": "small", "size": "طلب ثُمن ك", "size_en": "Small 1/8 kg", "price": 140 },
+            { "id": "medium", "size": "مخصوص ربع ك", "size_en": "Medium 1/4 kg", "price": 185 },
+            { "id": "large", "size": "أكيلة نص ك", "size_en": "Large 1/2 kg", "price": 200 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "by-kilo",
+      "name": "طلبات بالكيلو",
+      "name_en": "By Kilo Orders",
+      "items": [
+        {
+          "id": "k1", "name": "كبدة بانيه", "name_en": "Liver Pane",
+          "price": 440, "image": "images/kilo-kebda.webp",
+          "description": "السعر للكيلو كامل", "description_en": "Price for full 1 kilo"
+        },
+        {
+          "id": "k2", "name": "مخ بانيه", "name_en": "Brain Pane",
+          "price": 1000, "image": "images/kilo-mokh.webp",
+          "description": "السعر للكيلو كامل", "description_en": "Price for full 1 kilo"
+        },
+        {
+          "id": "k3", "name": "فراخ بانيه", "name_en": "Chicken Pane",
+          "price": 440, "image": "images/kilo-chicken.webp",
+          "description": "السعر للكيلو كامل", "description_en": "Price for full 1 kilo"
+        },
+        {
+          "id": "k4", "name": "مشكل كبدة ومخ", "name_en": "Mix Liver & Brain",
+          "price": 580, "image": "images/kilo-mix-kebda-mokh.webp",
+          "description": "السعر للكيلو كامل", "description_en": "Price for full 1 kilo"
+        },
+        {
+          "id": "k5", "name": "مشكل كبدة وفراخ", "name_en": "Mix Liver & Chicken",
+          "price": 440, "image": "images/kilo-mix-kebda-chicken.webp",
+          "description": "السعر للكيلو كامل", "description_en": "Price for full 1 kilo"
+        },
+        {
+          "id": "k6", "name": "مشكل 3 أصناف", "name_en": "3 Mix",
+          "price": 580, "image": "images/kilo-mix-3.webp",
+          "description": "السعر للكيلو كامل", "description_en": "Price for full 1 kilo"
+        }
+      ]
+    }
+  ]
+}
