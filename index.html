@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطعم أبو هيثم - المنيو الإلكتروني</title>
+    <meta name="description" content="اطلب الآن أشهى وجبات مطعم أبو هيثم">
+    <meta property="og:title" content="مطعم أبو هيثم">
+    <meta property="og:image" content="assets/og-image.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/mobile.css">
+</head>
+<body>
+
+<header class="header">
+    <button id="btn-lang" class="btn-lang" onclick="toggleLanguage()">EN</button>
+    <div class="logo-container">
+        <img src="images/logo.webp" class="logo" alt="شعار مطعم أبو هيثم">
+    </div>
+    <h1 id="site-title">مطعم أبو هيثم</h1>
+    <p id="site-slogan">أصل التسوية والمذاق الأصيل</p>
+</header>
+
+<nav id="category-nav" class="category-nav" aria-label="أقسام المنيو"></nav>
+
+<main id="menu-container" aria-live="polite">
+    <p style="text-align:center;padding:20px">جاري التحميل...</p>
+</main>
+
+<footer class="site-footer">
+    <h3 id="footer-title">مطعم أبو هيثم</h3>
+</footer>
+
+<div id="floating-cart" class="floating-cart" onclick="openCartModal()" role="button" aria-label="فتح السلة">
+    <span id="cart-count">0 عناصر</span>
+    <span id="cart-total">0 جنيه</span>
+</div>
+
+<div id="cart-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="سلة الطلبات">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>السلة</h2>
+            <button onclick="closeCartModal()" aria-label="إغلاق السلة">×</button>
+        </div>
+        <div id="cart-items-container"></div>
+        <div class="modal-footer">
+            <div id="modal-total-display"></div>
+            <button id="btn-checkout">تأكيد الطلب واتساب</button>
+        </div>
+    </div>
+</div>
+
+<script src="scripts/cart.js" defer></script>
+<script src="scripts/whatsapp.js" defer></script>
+<script src="scripts/app.js" defer></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    });
+}
+</script>
+
+</body>
+</html>

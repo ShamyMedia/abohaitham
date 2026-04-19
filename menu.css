@@ -1,0 +1,57 @@
+#menu-container {
+  padding: 1rem;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.menu-card {
+  background: var(--light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+@media (hover: hover) {
+  .menu-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+}
+
+.menu-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0;
+}
+
+.price-hint {
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.menu-card .btn-add {
+  margin-top: auto;
+  background-color: var(--primary);
+  color: var(--light);
+  border: none;
+  padding: 0.6rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.menu-card .btn-add:hover { background: #B71C1C; }
