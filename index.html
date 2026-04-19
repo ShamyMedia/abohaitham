@@ -65,10 +65,13 @@
     </div>
 </footer>
 
-<div id="floating-cart" class="floating-cart" onclick="openCartModal()" role="button" aria-label="فتح السلة">
-    <span>🛒</span>
-    <span id="cart-count">0 عناصر</span>
-    <span id="cart-total">0 جنيه</span>
+<div id="floating-cart" class="floating-cart" onclick="openCartModal()" role="button" aria-label="فتح السلة وإتمام الطلب">
+    <div class="floating-cart-info">
+        <span>🛒</span>
+        <span id="cart-count">0 عناصر</span>
+        <span id="cart-total">0 جنيه</span>
+    </div>
+    <button class="floating-cart-btn" tabindex="-1" id="floating-cart-cta">إتمام الطلب ←</button>
 </div>
 
 <div id="cart-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="سلة الطلبات">
