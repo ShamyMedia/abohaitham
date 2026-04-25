@@ -1,0 +1,24 @@
+@media screen and (max-width: 600px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    padding: 0.4rem 0.6rem 0.8rem;
+  }
+
+  .menu-img-wrap { height: 120px; }
+
+  .card-info { padding: 0.5rem 0.6rem 0.4rem; }
+  .card-info h3 { font-size: 0.85rem; }
+  .card-desc { -webkit-line-clamp: 1; font-size: 0.74rem; }
+  .price-hint { font-size: 0.8rem; }
+  .btn-add { padding: 0.5rem; font-size: 0.82rem; }
+
+  .section-title { font-size: 1rem; }
+  .modal-content { max-height: 92vh; }
+  .header h1 { font-size: 1.2rem; }
+}
+
+@media screen and (max-width: 360px) {
+  .menu-grid { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+  .menu-img-wrap { height: 100px; }
+}
